@@ -183,7 +183,6 @@ public static boolean verificaVencedor(char[][] tabuleiro, char jogador) {
 				System.out.print("\n");
 			}
 
-		// Dentro do seu loop principal
 		if (verificaVencedor(tabuleiro, 'x')) {
 			System.out.println("Jogador ganhou!");
 			break;
