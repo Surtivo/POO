@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class Exercicios_Sala {
 	
@@ -28,8 +29,8 @@ public class Exercicios_Sala {
 	}
 	
 	public static void exer_2 () {
-		int [] notas = new int [10];
-		String [] alunos = new String [10];
+		int [] notas = new int [CONST];
+		String [] alunos = new String [CONST];
 		
 		Scanner input = new Scanner(System.in);
 		System.out.println("De o nome de um aluno e diga sua nota:");
@@ -66,9 +67,165 @@ public class Exercicios_Sala {
 		
 		input.close();
 	}
+
+// Função para verificar se há um vencedor
+public static boolean verificaVencedor(char[][] tabuleiro, char jogador) {
+    // Verifica linhas e colunas
+    for (int i = 0; i < 3; i++) {
+        if ((tabuleiro[i][0] == jogador && tabuleiro[i][1] == jogador && tabuleiro[i][2] == jogador) || // Linha
+            (tabuleiro[0][i] == jogador && tabuleiro[1][i] == jogador && tabuleiro[2][i] == jogador)) { // Coluna
+            return true;
+        }
+    }
+
+    // Verifica diagonais
+    if ((tabuleiro[0][0] == jogador && tabuleiro[1][1] == jogador && tabuleiro[2][2] == jogador) || // Diagonal principal
+        (tabuleiro[0][2] == jogador && tabuleiro[1][1] == jogador && tabuleiro[2][0] == jogador)) { // Diagonal secundária
+        return true;
+    }
+    
+    return false;
+}
+
+	public static void exer_3 () {
+		Scanner input = new Scanner(System.in);
+		
+		char tabuleiro [][] = new char [3][3];
+		Random generator = new Random();
+		int x, y, x_maq, y_maq;
+
+		int iniciar = generator.nextInt(1);
+		for(int i = 0; i<3; i++){
+			for(int j = 0; j<3; j++){
+				tabuleiro[i][j] = '-';
+			}
+		}
+
+		while(true){
+
+			if(iniciar == 0){
+				
+				while(true){
+					System.out.println("Digite a posição que deseja usar (digite a linha e depois):");
+					x = input.nextInt();
+					input.nextLine();	// Limpa buffer
+					y = input.nextInt();
+					input.nextLine();	// Limpa buffer
+	
+					if(tabuleiro [x][y] == 'x' || tabuleiro [x][y] == 'o')
+						System.out.println("Espaço ocupado. Digite outra posição!");
+					else break;
+				}
+
+				tabuleiro[x][y] = 'x';
+				for(int i = 0; i<3; i++){
+					for(int j = 0; j<3; j++){
+						System.out.print(tabuleiro[i][j]);
+					}
+					System.out.print("\n");
+				}
+				System.out.print("\n");
+
+				while(true){
+					x_maq = generator.nextInt(3);
+					y_maq = generator.nextInt(3);
+	
+					if(tabuleiro [x_maq][y_maq] == 'x' || tabuleiro [x_maq][y_maq] == 'o');
+					else break;
+				}
+
+				tabuleiro[x_maq][y_maq] = 'o';
+				for(int i = 0; i<3; i++){
+					for(int j = 0; j<3; j++){
+						System.out.print(tabuleiro[i][j]);
+					}
+					System.out.print("\n");
+				}
+				System.out.print("\n");
+
+			}else {
+				while(true){
+					x_maq = generator.nextInt(3);
+					y_maq = generator.nextInt(3);
+	
+					if(tabuleiro [x_maq][y_maq] == 'x' || tabuleiro [x_maq][y_maq] == 'o');
+					else break;
+				}
+
+				tabuleiro[x_maq][y_maq] = 'o';
+				for(int i = 0; i<3; i++){
+					for(int j = 0; j<3; j++){
+						System.out.print(tabuleiro[i][j]);
+					}
+					System.out.print("\n");
+				}
+				System.out.print("\n");
+
+				while(true){
+					System.out.println("Digite a posição que deseja usar (digite a linha e depois):");
+					x = input.nextInt();
+					input.nextLine();	// Limpa buffer
+					y = input.nextInt();
+					input.nextLine();	// Limpa buffer
+	
+					if(tabuleiro [x][y] == 'x' || tabuleiro [x][y] == 'o')
+						System.out.println("Espaço ocupado. Digite outra posição!");
+					else break;
+				}
+
+				tabuleiro[x][y] = 'x';
+				for(int i = 0; i<3; i++){
+					for(int j = 0; j<3; j++){
+						System.out.print(tabuleiro[i][j]);
+					}
+					System.out.print("\n");
+				}
+				System.out.print("\n");
+			}
+
+		// Dentro do seu loop principal
+		if (verificaVencedor(tabuleiro, 'x')) {
+			System.out.println("Jogador ganhou!");
+			break;
+		} else if (verificaVencedor(tabuleiro, 'o')) {
+			System.out.println("Computador ganhou!");
+			break;
+		}
+				
+		}
+
+		input.close();
+	}
+
+
+	public static void exer_4(){
+		int tabuleiro [][] = new int [6][6];
+		for(int i = 0; i<6; i++){
+			for(int j = 0; j<6; j++){
+				tabuleiro[i][j] = 0;
+			}
+		}
+
+		Random generator = new Random();
+		int dado1, dado2;
+
+		for(int i = 0; i<36000; i++){
+			dado1 = generator.nextInt(6);
+			dado2 = generator.nextInt(6);
+			tabuleiro[dado1][dado2]++;
+		}
+
+		for(int i = 0; i<6; i++){
+			for(int j = 0; j<6; j++){
+				System.out.print(tabuleiro[i][j] + "\t");
+			}
+			System.out.print("\n");
+		}
+		System.out.print("\n");
+	}
 	
 	public static void main(String[] args) {
-		exer_2();
+		exer_4();
 	}
 
 }
