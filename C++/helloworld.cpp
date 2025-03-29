@@ -11,3 +11,5 @@ int main() {
 
     return 0;
 }
+
+//Retirado de: https://www.geeksforgeeks.org/writing-first-c-program-hello-world-example/
