@@ -1,0 +1,5 @@
+﻿  Lista_Exer_1.cpp
+C:\Users\emanu\source\repos\POO\C++\Lista_Exer_1\Lista_Exer_1.cpp(55,14): warning C4244: 'inicializando': conversão de 'int' para 'float', possível perda de dados
+C:\Users\emanu\source\repos\POO\C++\Lista_Exer_1\Lista_Exer_1.cpp(99,12): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+C:\Users\emanu\source\repos\POO\C++\Lista_Exer_1\Lista_Exer_1.cpp(166,17): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+  Lista_Exer_1.vcxproj -> C:\Users\emanu\source\repos\POO\C++\Lista_Exer_1\x64\Debug\Lista_Exer_1.exe
