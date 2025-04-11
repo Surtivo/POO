@@ -1,6 +1,6 @@
 package conta;
 
-public class Teste_Conta {
+/*public class Teste_Conta {
 
 	public static void main(String[] args) {
 		conta c1 = new conta();
@@ -14,4 +14,11 @@ public class Teste_Conta {
 		System.out.println(c1.getSaldo());
 	}
 
+}*/
+
+public class Teste_Conta{
+	Cliente x1 = new Cliente("123456789", "Emanuel Cabral");
+	
+	
 }
+
