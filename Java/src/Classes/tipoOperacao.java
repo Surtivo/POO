@@ -1,4 +1,4 @@
-package conta;
+package Classes;
 
 public enum tipoOperacao {
 	CREDITO,
