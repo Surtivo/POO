@@ -60,7 +60,7 @@ public class Conta {
 		sb.append("\nExtrato da conta " + getNumero() +"\n\n");
 
 		if(transacoes.isEmpty())
-			sb.append("Nenhuma transação registrada\n");
+			sb.append("\nNenhuma transação registrada\n");
 		else{
 			for(Transação transacao : transacoes){
 				sb.append("Data: ").append(transacao.getData())
