@@ -57,7 +57,7 @@ public class Conta {
 	public StringBuilder listarextrato() {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("Extrato da conta\n\n");
+		sb.append("\nExtrato da conta " + getNumero() +"\n\n");
 
 		if(transacoes.isEmpty())
 			sb.append("Nenhuma transação registrada\n");
