@@ -27,7 +27,6 @@ public class Conta {
 	}
 	
 	public Conta(int numero, Cliente titular) {
-		super();
 		this.numero = numero;
 		this.titular = titular;
 	}
@@ -60,14 +59,14 @@ public class Conta {
 		sb.append("\nExtrato da conta " + getNumero() +"\n\n");
 
 		if(transacoes.isEmpty())
-			sb.append("\nNenhuma transação registrada\n");
+			sb.append("Nenhuma transação registrada\n");
 		else{
 			for(Transação transacao : transacoes){
 				sb.append("Data: ").append(transacao.getData())
                   .append(" | Tipo: ").append(transacao.getTipoOperacao())
-                  .append(" | Valor: R$ ").append(transacao.getValor())
-                  .append("\nSaldo do dia: ").append(getSaldo()).append("\n\n");
+                  .append(" | Valor: R$ ").append(transacao.getValor()).append("\n\n");
 			}
+			sb.append("Saldo da Conta: ").append(getSaldo()).append("\n\n");
 		}
 		return sb;	
 	}
