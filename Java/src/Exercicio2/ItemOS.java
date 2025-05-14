@@ -5,16 +5,33 @@ public class ItemOS {
 	private double preco;
 	private Item item;
 	
-	public ItemOS(int qtde, double preco, Item item) {
+	public ItemOS(int qtde, Item item) {
 		this.qtde = qtde;
-		this.preco = preco;
+		this.preco = item.getPreco();
 		this.item = item;
 	}
 	
-	public Item getItem() {
-		return item;
+	public ETipoItem getTipo() {
+		return item.getTipoItem();
 	}
+	
+	public long getCodigo() {
+		return item.getCodigo();
+	}
+	
+	public String getDescricao() {
+		return item.getDescricao();
+	}
+	
+	public double getPreco() {
+		return preco;
+	}
+
 	public int getQtde() {
 		return qtde;
+	}
+
+	public Item getItem() {
+		return item;
 	}
 }

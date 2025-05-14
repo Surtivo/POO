@@ -1,11 +1,19 @@
 package Exercicio2;
 
 public class Cliente extends Pessoa {
-	private boolean platinum;
+	private boolean platinum = false;
 	
-    public Cliente(int cpf, String nome, String tel, String email, Veiculo veiculo) {
+    public Cliente(long cpf, String nome, String tel, String email) {
 		super(cpf, nome, tel, email);
-		this.platinum = false;
+		//this.platinum = false;
 	}
+    
+    public boolean isPlatinum() {
+    	return platinum;
+    }
+    
+    public void setPlatinumTrue() {
+    	this.platinum = true; 	    	
+    }
 }
 	

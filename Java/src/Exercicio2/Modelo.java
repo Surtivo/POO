@@ -6,4 +6,8 @@ public class Modelo {
 	public Modelo(String modelo) {
 		this.modelo = modelo;
 	}
+
+	public String getModelo() {
+		return modelo;
+	}
 }

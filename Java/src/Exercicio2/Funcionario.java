@@ -9,5 +9,21 @@ public class Funcionario extends Pessoa{
 		this.matricula = matricula;
 		this.disponibilidade = true;
 	}
+    
+    public boolean isDisponivel() {
+    	return disponibilidade;
+    }
+
+	public int getMatricula() {
+		return matricula;
+	}
+
+	public boolean isDisponibilidade() {
+		return disponibilidade;
+	}
+
+	public void setDisponibilidade(boolean disponibilidade) {
+		this.disponibilidade = disponibilidade;
+	}
 
 }
