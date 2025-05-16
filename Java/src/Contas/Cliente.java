@@ -1,4 +1,4 @@
-package Classes;
+package Contas;
 
 public class Cliente {
 	private final String cpf;

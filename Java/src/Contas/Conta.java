@@ -1,4 +1,4 @@
-package Classes;
+package Contas;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package Classes;
+package Contas.copy;
 
 import java.util.Date;
 
@@ -7,9 +7,9 @@ public class Transação {
 	private final Date data;
 	private final double valor;
 	
-	public Transação(tipoOperacao operacao, Date data, double valor) {
+	public Transação(tipoOperacao operacao, double valor) {
 		this.operacao = operacao;
-		this.data = data;
+		this.data = new Date();
 		this.valor = valor;
 	}
 
