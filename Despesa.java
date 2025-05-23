@@ -24,5 +24,13 @@ public class Despesa {
 	public double getValor() {
 		return valor;
 	}
+	
+	public String ListaDespesa() {
+		String aud = null;
+		StringBuilder st = new StringBuilder();
+		st.append("\nDescricao: " + this.getDescricao() + " - Valor: R$:" + this.getValor());
+		aud = "" + st;
+		return aud;	
+	}
 
 }

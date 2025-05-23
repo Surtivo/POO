@@ -25,4 +25,14 @@ public class Audiencia {
 		return recomendacao;
 	}
 	
+	public String listaAudiencia() {
+		String aud = null;
+		StringBuilder st = new StringBuilder();
+		st.append("\nRecomendação: " + this.getRecomendacao());
+		st.append(" - Advogado(a): " + this.getAdvogado().getNome());
+		st.append(" - Registro do(a) Advogado(a): " + this.getAdvogado().getRegistro());
+		aud = "" + st;
+		return aud;	
+	}
+	
 }
