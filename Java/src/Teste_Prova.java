@@ -1,5 +1,5 @@
-package Prova;
-public class testep1 {
+import Prova.*;
+public class Teste_Prova {
 
 	public static void main(String[] args) {
 		Pessoa p1 = new PessoaFisica("Joao", "ja@mn", 246842, 198654);
