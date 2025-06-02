@@ -1,4 +1,4 @@
-package Prova;
+package enums;
 
 public enum EFaseProcesso {
 	INICIAL,

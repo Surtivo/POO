@@ -14,13 +14,13 @@ public class Processo {
 	private ArrayList<Audiencia> audiencias = new ArrayList<>();
 	private ArrayList<Despesa> custas = new ArrayList<>();
 
-	public Processo(Pessoa cliente, Pessoa parteContraria, Tribunal tribunal, long numero, EFaseProcesso fase) {
+	public Processo(Pessoa cliente, Pessoa parteContraria, Tribunal tribunal, long numero, EFaseProcesso inicial) {
 		this.cliente = cliente;
 		this.parteContraria = parteContraria;
 		this.tribunal = tribunal;
 		this.numero = numero;
 		this.dataAbertura = new Date();
-		this.fase = fase;
+		this.fase = inicial;
 	}
 
 	public Pessoa getCliente() {

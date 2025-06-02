@@ -1,6 +1,6 @@
-package Prova;
+package classes;
 
-import Prova.Exceptions.PessoaJuridicaException;
+import exceptions.PessoaJuridicaException;
 import util.CnpjUtil;
 import util.EmailUtil;
 import util.NomeUtil;

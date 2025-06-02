@@ -1,15 +1,20 @@
-package Prova;
+package classes;
 
 import java.util.Date;
+import exceptions.AudienciaException;
 
 public class Audiencia {
 	private final Advogado advogado;
 	private final Date data;
 	private final String recomendacao;
 	
-	public Audiencia(Advogado advogado, String recomendacao) {
+	public Audiencia(Advogado advogado, String recomendacao) throws AudienciaException{
+		if(advogado == null)
+			throw new AudienciaException("Advogado não pode ser nulo!");
 		this.advogado = advogado;
 		this.data = new Date();
+		if(recomendacao == null)
+			throw new AudienciaException("Recomendação não pode ser nula");
 		this.recomendacao = recomendacao;
 	}
 

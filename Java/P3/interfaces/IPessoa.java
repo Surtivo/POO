@@ -1,4 +1,4 @@
-package Prova;
+package interfaces;
 
 public interface IPessoa {
 	String getNome();

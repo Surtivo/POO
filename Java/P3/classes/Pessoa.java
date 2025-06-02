@@ -1,4 +1,6 @@
-package Prova;
+package classes;
+
+import interfaces.IPessoa;
 
 public abstract class Pessoa implements IPessoa{
 	private String nome;

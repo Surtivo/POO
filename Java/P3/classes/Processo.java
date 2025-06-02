@@ -1,7 +1,12 @@
-package Prova;
+package classes;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import enums.EFaseProcesso;
+import exceptions.AudienciaException;
+import exceptions.ProcessoException;
+import util.NumProcUtil;
 
 public class Processo {
 	private Pessoa cliente;
@@ -14,10 +19,18 @@ public class Processo {
 	private ArrayList<Audiencia> audiencias = new ArrayList<>();
 	private ArrayList<Despesa> custas = new ArrayList<>();
 
-	public Processo(Pessoa cliente, Pessoa parteContraria, Tribunal tribunal, long numero, EFaseProcesso fase) {
+	public Processo(Pessoa cliente, Pessoa parteContraria, Tribunal tribunal, long numero, EFaseProcesso fase) throws ProcessoException {
+		if (cliente == null)
+			throw new ProcessoException("Cliente do processo não pode ser nulo!");
 		this.cliente = cliente;
+		if (parteContraria == null)
+			throw new ProcessoException("Parte contraria do processo não pode ser nulo!");
 		this.parteContraria = parteContraria;
+		if (tribunal == null)
+			throw new ProcessoException("Tribunal do processo não pode ser nulo!");
 		this.tribunal = tribunal;
+		if(!NumProcUtil.validateNumero(numero))
+			throw new ProcessoException("Numero do processo inválido!");
 		this.numero = numero;
 		this.dataAbertura = new Date();
 		this.fase = fase;
@@ -42,21 +55,32 @@ public class Processo {
 	public Date getDataAbertura() {
 		return dataAbertura;
 	}
+	
+	public void setFase(EFaseProcesso fase) {
+		this.fase = fase;
+	}
 
 	public EFaseProcesso getFase() {
 		return fase;
 	}
 
 	public Audiencia addAudiencia(Advogado advogado, String recomendacao) {
-		Audiencia a = new Audiencia(advogado, recomendacao);
+		Audiencia a = null;
+		try {
+			a = new Audiencia(advogado, recomendacao);
+		} catch (AudienciaException e) {
+			System.err.println(e.getMessage());
+		}
 		audiencias.add(a);
 		return a;
 	}
 
-	public String getAudiencias() {
+	public String getAudiencias() throws AudienciaException {
 		String aud = null;
 		StringBuilder st = new StringBuilder();
 		for (Audiencia a : audiencias) {
+			if(a == null)
+				throw new AudienciaException("Audiencia não pode ser nula");
 			st.append(a.listaAudiencia());
 		}
 		aud = "\n------------------------------\nAudiencias do processo " + this.getNumero() + ":" + st;
@@ -80,10 +104,6 @@ public class Processo {
 				+ parteContraria.getCadastroRF() + "\nTribunal: " + tribunal.getSigla() + " - "
 				+ tribunal.getDescricao();
 		return aud;
-	}
-
-	public void setFase(EFaseProcesso fase) {
-		this.fase = fase;
 	}
 
 	public Despesa addCusta(String descricao, double valor) {

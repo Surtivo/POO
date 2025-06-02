@@ -1,4 +1,4 @@
-package Prova.Exceptions;
+package exceptions;
 
 public class PessoaJuridicaException extends Exception{
 
