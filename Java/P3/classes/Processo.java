@@ -1,10 +1,12 @@
 package classes;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import enums.EFaseProcesso;
 import exceptions.AudienciaException;
+import exceptions.DespesaException;
 import exceptions.ProcessoException;
 import util.NumProcUtil;
 
@@ -64,7 +66,14 @@ public class Processo {
 		return fase;
 	}
 
-	public Audiencia addAudiencia(Advogado advogado, String recomendacao) {
+	public Audiencia addAudiencia(Advogado advogado, String recomendacao) throws AudienciaException {
+		Audiencia a = null;
+		a = new Audiencia(advogado, recomendacao);
+		audiencias.add(a);
+		return a;
+	}
+	
+	/*public Audiencia addAudiencia(Advogado advogado, String recomendacao) {
 		Audiencia a = null;
 		try {
 			a = new Audiencia(advogado, recomendacao);
@@ -73,7 +82,7 @@ public class Processo {
 		}
 		audiencias.add(a);
 		return a;
-	}
+	}*/
 
 	public String getAudiencias() throws AudienciaException {
 		String aud = null;
@@ -86,6 +95,12 @@ public class Processo {
 		aud = "\n------------------------------\nAudiencias do processo " + this.getNumero() + ":" + st;
 		return aud;
 	}
+	
+	public Despesa addCusta(String descricao, double valor) throws DespesaException {
+		Despesa c = new Despesa(descricao, valor);
+		custas.add(c);
+		return c;
+	}
 
 	public String getCustas() {
 		String aud = null;
@@ -97,6 +112,26 @@ public class Processo {
 		return aud;
 	}
 
+	public double getTotalCustas() {
+		double total = 0.0;
+		for (Despesa d : custas) {
+			total += d.getValor();
+		}
+		return total;
+	}
+	
+	public String getTotalCustas2() {
+		double total = 0.0;
+		for (Despesa d : custas) {
+			total += d.getValor();
+		}
+		
+		DecimalFormat formatador = new DecimalFormat("#.##"); //Limita a 2 casas decimais;
+		String stringFormatada = formatador.format(total);
+		
+		return stringFormatada;
+	}
+	
 	@Override
 	public String toString() {
 		String aud = "Numero do Processo: " + getNumero() + "\nData de abertura: " + getDataAbertura() + " - Fase do processo: " + getFase() + "\nCliente: " + cliente.getNome() + " - Registro: "
@@ -104,20 +139,6 @@ public class Processo {
 				+ parteContraria.getCadastroRF() + "\nTribunal: " + tribunal.getSigla() + " - "
 				+ tribunal.getDescricao();
 		return aud;
-	}
-
-	public Despesa addCusta(String descricao, double valor) {
-		Despesa c = new Despesa(descricao, valor);
-		custas.add(c);
-		return c;
-	}
-
-	public double getTotalCustas() {
-		double total = 0.0;
-		for (Despesa d : custas) {
-			total += d.getValor();
-		}
-		return total;
 	}
 
 }

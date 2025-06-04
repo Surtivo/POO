@@ -1,7 +1,19 @@
 package main;
-import enums.*;
-import classes.*;
-import exceptions.*;
+
+import classes.Advogado;
+import classes.Pessoa;
+import classes.PessoaFisica;
+import classes.PessoaJuridica;
+import classes.Processo;
+import classes.Tribunal;
+import enums.EFaseProcesso;
+import exceptions.AdvogadoException;
+import exceptions.AudienciaException;
+import exceptions.DespesaException;
+import exceptions.PessoaFisicaException;
+import exceptions.PessoaJuridicaException;
+import exceptions.ProcessoException;
+import exceptions.TribunalException;
 
 public class testep1 {
 
@@ -29,7 +41,7 @@ public class testep1 {
 		
 		Advogado a1 = null;
 		try {
-			a1 = new Advogado((PessoaFisica)p3, "111111"); //Deve ter mais um "1"
+			a1 = new Advogado((PessoaFisica)p3, "111111"); //Deve perder um "1" para quebrar;
 		} catch (AdvogadoException e) {
 			System.err.println(e.getMessage());
 		}
@@ -49,11 +61,30 @@ public class testep1 {
 		}
 		
 		if(pro1 != null) {
-			pro1.addAudiencia(a1, "Teste123");
-			pro1.addAudiencia(a1, "Teste321");
-			pro1.addCusta("Auxiliar1", 20.50);
-			pro1.addCusta("Auxiliar2", 50.51);
-			pro1.getTotalCustas();
+			
+			try {
+				pro1.addAudiencia(a1, "Teste123");
+			} catch (AudienciaException e) {
+				System.err.println(e.getMessage());
+			}
+			
+			try {
+				pro1.addAudiencia(a1, "Teste321");
+			} catch (AudienciaException e) {
+				System.err.println(e.getMessage());
+			}	
+			
+			try {
+				pro1.addCusta("Auxiliar1", 20.50);
+			} catch (DespesaException e) {
+				System.err.println(e.getMessage());
+			}
+			
+			try {
+				pro1.addCusta("Auxiliar2", 50.51);
+			} catch (DespesaException e) {
+				System.err.println(e.getMessage());
+			}
 			
 			System.out.println("------------------------------\n" + "-- Listagem do processo: " + pro1.getNumero() + " --\n------------------------------\n");
 			System.out.println(pro1.toString());
@@ -63,7 +94,7 @@ public class testep1 {
 				System.err.println(e.getMessage());
 			}
 			System.out.println(pro1.getCustas());
-			System.out.println("\t\tTotal: " + pro1.getTotalCustas() + "\n");
+			System.out.println("\t\t       Total: " + pro1.getTotalCustas2() + "\n");
 			System.out.println("------------------------------\n" + "------ Fim da Listagem  ------\n------------------------------\n");
 		}
 
