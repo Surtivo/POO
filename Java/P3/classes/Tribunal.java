@@ -2,26 +2,28 @@ package classes;
 
 import exceptions.TribunalException;
 import util.TribunalUtil;
+import valueObjects.Secao;
+import valueObjects.Sigla;
 
 public class Tribunal {
-	private final String sigla;
+	private final Sigla sigla;
 	private final String descricao;
-	private final String secao;
+	private final Secao secao;
 	
-	public Tribunal(String sigla, String descricao, String secao) throws TribunalException {
-		if(!TribunalUtil.validateSigla(sigla))
-			throw new TribunalException ("Sigla do tribual inválida!");
+	public Tribunal(Sigla sigla, String descricao, Secao secao) throws TribunalException {
+		//if(!TribunalUtil.validateSigla(sigla))
+			//throw new TribunalException ("Sigla do tribunal inválida!");
 		this.sigla = sigla;
 		if(!TribunalUtil.validateDescricao(descricao))
-			throw new TribunalException ("Descrição do tribual inválida!");
+			throw new TribunalException ("Descrição do tribunal inválida!");
 		this.descricao = descricao;
-		if(!TribunalUtil.validateSecao(secao))
-			throw new TribunalException ("Seção do tribual inválida!");
+		//if(!TribunalUtil.validateSecao(secao))
+			//throw new TribunalException ("Seção do tribunal inválida!");
 		this.secao = secao;
 	}
 
 	public String getSigla() {
-		return sigla;
+		return sigla.toString();
 	}
 
 	public String getDescricao() {
@@ -29,7 +31,7 @@ public class Tribunal {
 	}
 
 	public String getSecao() {
-		return secao;
+		return secao.toString();
 	}
 	
 }

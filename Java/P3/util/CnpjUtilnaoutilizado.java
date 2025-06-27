@@ -1,6 +1,6 @@
 package util;
 
-public class CnpjUtil {
+public class CnpjUtilnaoutilizado {
 	public static boolean validateCnpj(String cnpj) {
 		if(cnpj == null || cnpj.isBlank() || cnpj.isEmpty())
 			return false;

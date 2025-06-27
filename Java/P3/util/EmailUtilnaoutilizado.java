@@ -1,6 +1,6 @@
 package util;
 
-public class EmailUtil {
+public class EmailUtilnaoutilizado {
 	public static boolean validateEmail(String email) {
 		if(email == null || email.isBlank() || email.isEmpty())
 			return false;

@@ -1,13 +1,12 @@
 package classes;
 
-import exceptions.PessoaJuridicaException;
-import util.CnpjUtil;
-import util.EmailUtil;
-import util.NomeUtil;
-import util.TelUtil;
+import exceptions.PessoaException;
+import valueObjects.Cnpj;
+import valueObjects.Email;
+import valueObjects.Telefone;
 
 public class PessoaJuridica extends Pessoa{
-	private final String cnpj;
+	private final Cnpj cnpj;
 	private PessoaFisica preposto;
 
 	public PessoaFisica getPreposto() {
@@ -18,23 +17,23 @@ public class PessoaJuridica extends Pessoa{
 		this.preposto = preposto;
 	}
 
-	public PessoaJuridica(String nome, String email, String tel, String cnpj, PessoaFisica preposto) throws PessoaJuridicaException{
+	public PessoaJuridica(String nome, Email email, Telefone tel, Cnpj cnpj, PessoaFisica preposto) throws PessoaException{
 		super(nome, email, tel);
-		if(!NomeUtil.validateNome(nome))
-			throw new PessoaJuridicaException ("Nome  inválido ou nulo!");
-		if(!EmailUtil.validateEmail(email))
-			throw new PessoaJuridicaException ("Email inválido ou nulo!");
-		if(!TelUtil.validateTel(tel))
-			throw new PessoaJuridicaException ("Telefone inválido ou nulo!");
-		if(!CnpjUtil.validateCnpj(cnpj))
-			throw new PessoaJuridicaException ("CNPJ inválido ou nulo!");
+		//if(!NomeUtil.validateNome(nome))
+			//throw new PessoaException ("Nome  inválido ou nulo!");
+		//if(!EmailUtil.validateEmail(email))
+			//throw new PessoaException ("Email inválido ou nulo!");
+		//if(!TelUtil.validateTel(tel))
+			//throw new PessoaException ("Telefone inválido ou nulo!");
+		//if(!CnpjUtil.validateCnpj(cnpj))
+			//throw new PessoaException ("CNPJ inválido ou nulo!");
 		this.cnpj = cnpj;
 		this.preposto = preposto;
 	}
 
 	@Override
 	public String getCadastroRF() {
-		return cnpj;
+		return cnpj.toString();
 	}
 
 }

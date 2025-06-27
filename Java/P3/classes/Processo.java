@@ -8,20 +8,20 @@ import enums.EFaseProcesso;
 import exceptions.AudienciaException;
 import exceptions.DespesaException;
 import exceptions.ProcessoException;
-import util.NumProcUtil;
+import valueObjects.NumProc;
 
 public class Processo {
 	private Pessoa cliente;
 	private Pessoa parteContraria;
 	private Tribunal tribunal;
-	private final long numero;
+	private final NumProc numero;
 	private final Date dataAbertura;
 	private EFaseProcesso fase;
 
 	private ArrayList<Audiencia> audiencias = new ArrayList<>();
 	private ArrayList<Despesa> custas = new ArrayList<>();
 
-	public Processo(Pessoa cliente, Pessoa parteContraria, Tribunal tribunal, long numero, EFaseProcesso fase) throws ProcessoException {
+	public Processo(Pessoa cliente, Pessoa parteContraria, Tribunal tribunal, NumProc numero, EFaseProcesso fase) throws ProcessoException {
 		if (cliente == null)
 			throw new ProcessoException("Cliente do processo não pode ser nulo!");
 		this.cliente = cliente;
@@ -31,8 +31,8 @@ public class Processo {
 		if (tribunal == null)
 			throw new ProcessoException("Tribunal do processo não pode ser nulo!");
 		this.tribunal = tribunal;
-		if(!NumProcUtil.validateNumero(numero))
-			throw new ProcessoException("Numero do processo inválido!");
+		//if(!NumProcUtil.validateNumero(numero))
+			//throw new ProcessoException("Numero do processo inválido!");
 		this.numero = numero;
 		this.dataAbertura = new Date();
 		this.fase = fase;
@@ -50,8 +50,8 @@ public class Processo {
 		return tribunal;
 	}
 
-	public long getNumero() {
-		return numero;
+	public String getNumero() {
+		return numero.toString();
 	}
 
 	public Date getDataAbertura() {
@@ -128,7 +128,6 @@ public class Processo {
 		
 		DecimalFormat formatador = new DecimalFormat("#.##"); //Limita a 2 casas decimais;
 		String stringFormatada = formatador.format(total);
-		
 		return stringFormatada;
 	}
 	

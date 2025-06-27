@@ -1,6 +1,6 @@
 package util;
 
-public class CpfUtil {
+public class CpfUtilnaoutilizado {
 	public static boolean validateCpf(String cpf) {
 		if(cpf == null || cpf.isBlank() || cpf.isEmpty())
 			return false;

@@ -1,6 +1,6 @@
 package util;
 
-public class RegistroUtil {
+public class RegistroUtilnaoutilizado {
 
 	public static boolean validateRegistro(String registro) {
 		if(registro == null || registro.isBlank() || registro.isEmpty())
