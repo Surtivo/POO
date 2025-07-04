@@ -16,7 +16,7 @@ public class TribunalController {
 	//private List<Tribunal> tribunais = new ArrayList<Tribunal>();
 	
 	public void addTribunal (TribunalDto tribunal) throws TribunalException{
-		Tribunal t = new Tribunal (Sigla.valueOf(tribunal.getSigla()), tribunal.getDescricao(), Secao.valueOf(tribunal.getSigla()));
+		Tribunal t = new Tribunal (Sigla.valueOf(tribunal.getSigla()), tribunal.getDescricao(), Secao.valueOf(tribunal.getSecao()));
 		tribunais.put(t.getSigla(), t);
 	}
 	
@@ -53,6 +53,13 @@ public class TribunalController {
 		if(t == null || td == null)
 			throw new TribunalException("Tribunal não encontrado!");
 		return td;
+	}
+	
+	public Tribunal getTribunalController(String sigla) throws TribunalException {
+		Tribunal t = tribunais.get(sigla);
+		if(t == null)
+			throw new TribunalException("Tribunal não encontrado!");
+		return t;
 	}
 	
 }

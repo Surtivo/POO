@@ -16,7 +16,7 @@ public class AdvogadoController {
 	HashMap<String, Advogado> advogados = new HashMap<String, Advogado>();
 	
 	public void addAdvogado(AdvogadoDto advogado, PessoaController personControl) throws AdvogadoException, PessoaException{
-		PessoaFisica pessoa = (PessoaFisica) personControl.getPessoa(advogado.getCadastroRF());
+		PessoaFisica pessoa = (PessoaFisica) personControl.getPessoaController(advogado.getCadastroRF());
 		Advogado a = new Advogado (pessoa, Registro.valueOf(advogado.getRegistro()));
 		advogados.put(a.getRegistro(), a);
 	}
@@ -36,10 +36,12 @@ public class AdvogadoController {
 		 return new ArrayList<>(advogados.values());
 	}
 	
-	public Advogado getAdvogado(String registro) throws AdvogadoException {
+	public AdvogadoDto getAdvogado(String registro) throws AdvogadoException {
 		Advogado a = advogados.get(registro);
-		if (a == null)
+		AdvogadoDto ad = new AdvogadoDto(a.getCadastroRF(), a.getRegistro());
+		if (a == null || ad == null)
 			throw new AdvogadoException("Advogado informado não está cadastrado!");
-		return a;
+		return ad;
 	}
+	
 }
