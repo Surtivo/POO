@@ -1,9 +1,14 @@
 package classes;
 
+import java.io.Serializable;
 import java.util.Date;
+
 import exceptions.AudienciaException;
 
-public class Audiencia {
+public class Audiencia implements Serializable{
+	
+	private static final long serialVersionUID = 7952061843072475740L;
+	
 	private final Advogado advogado;
 	private final Date data;
 	private final String recomendacao;

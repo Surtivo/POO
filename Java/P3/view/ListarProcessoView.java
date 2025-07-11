@@ -1,35 +1,61 @@
 package view;
 
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import control.ProcessoController;
 import exceptions.AudienciaException;
+import exceptions.NumProcException;
 import exceptions.ProcessoException;
 
 public class ListarProcessoView extends JFrame {
+
+	private static final long serialVersionUID = -3184167728998701207L;
 	
-	private static final long serialVersionUID = -2977056161590057795L;
+	private ProcessoController ProcessoControl;
+	private JTextField numeroTxt;
+	
+	public ListarProcessoView(ProcessoController ProcessoControl) {
+        super("Digite o Processo");
+        
+        this.ProcessoControl = ProcessoControl;
 
-	public ListarProcessoView(ProcessoController p, String numero) throws ProcessoException, AudienciaException {
-        super("Listagem do Processo");
+        setSize(250, 150);
+        setLocationRelativeTo(null); 
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
+        
+        numeroTxt = new JTextField();
 
-        setSize(400, 300);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 2));
 
-        JTextArea areaTexto = new JTextArea();
-        areaTexto.setEditable(false);
+        panel.add(new JLabel("Número do processo:"));
+        panel.add(numeroTxt);
+        
+        JButton buscar = new JButton("Buscar");
+        buscar.addActionListener(e -> actionSalvar());
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(p.getProcesso(numero).toString());
-        sb.append(p.getProcesso(numero).getAudiencias());
-        sb.append(p.getProcesso(numero).getTotalCustas2());
+        panel.add(buscar);
 
-        areaTexto.setText(sb.toString());
-
-        JScrollPane scroll = new JScrollPane(areaTexto);
-        add(scroll);
+        add(panel);
     }
+	
+	private void actionSalvar() {
+    	String numero = numeroTxt.getText();
+    	ListarProcessoTextView l = null;
+    	try {
+			l = new ListarProcessoTextView(this.ProcessoControl, numero);
+		} catch (ProcessoException | AudienciaException | NumProcException e1) {
+			System.err.println(e1.getMessage());
+	        JOptionPane.showMessageDialog(null, "Erro ao encontrar processo! " + e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		}   
+    	if(l != null)
+    		l.setVisible(true);		
+	}
 }

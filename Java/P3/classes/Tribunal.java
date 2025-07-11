@@ -1,24 +1,25 @@
 package classes;
 
-import exceptions.TribunalException;
+import java.io.Serializable;
+
+import exceptions.NomeException;
 import util.TribunalUtil;
 import valueObjects.Secao;
 import valueObjects.Sigla;
 
-public class Tribunal {
+public class Tribunal implements Serializable{
+
+	private static final long serialVersionUID = -819319085493436352L;
+	
 	private final Sigla sigla;
 	private final String descricao;
 	private final Secao secao;
 	
-	public Tribunal(Sigla sigla, String descricao, Secao secao) throws TribunalException {
-		//if(!TribunalUtil.validateSigla(sigla))
-			//throw new TribunalException ("Sigla do tribunal inválida!");
+	public Tribunal(Sigla sigla, String descricao, Secao secao) throws NomeException {
 		this.sigla = sigla;
 		if(!TribunalUtil.validateDescricao(descricao))
-			throw new TribunalException ("Descrição do tribunal inválida!");
+			throw new NomeException ("Descrição do tribunal inválida!");
 		this.descricao = descricao;
-		//if(!TribunalUtil.validateSecao(secao))
-			//throw new TribunalException ("Seção do tribunal inválida!");
 		this.secao = secao;
 	}
 

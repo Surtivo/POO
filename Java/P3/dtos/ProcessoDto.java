@@ -1,15 +1,16 @@
 package dtos;
 
 public class ProcessoDto {
+
 	String registroCliente;
 	String registroParteContraria;
 	String tribunal;
 	String numeroProc;
 	String fase;
-	
-	public ProcessoDto () {}
 
-	public ProcessoDto (String cliente, String parteContraria, String tribunal, String numero, String fase){
+	public ProcessoDto() {}
+
+	public ProcessoDto(String cliente, String parteContraria, String tribunal, String numero, String fase) {
 		this.registroCliente = cliente;
 		this.registroParteContraria = parteContraria;
 		this.tribunal = tribunal;
@@ -47,5 +48,13 @@ public class ProcessoDto {
 
 	public void setNumeroProc(String numeroProc) {
 		this.numeroProc = numeroProc;
-	}	
+	}
+
+	public String getFase() {
+		return fase;
+	}
+
+	public void setFase(String fase) {
+		this.fase = fase;
+	}
 }

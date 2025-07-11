@@ -1,10 +1,16 @@
 package classes;
 
+import java.io.Serializable;
 import java.util.Date;
+
 import exceptions.DespesaException;
+import util.DescricaoUtil;
 import util.ValorUtil;
 
-public class Despesa {
+public class Despesa implements Serializable{
+
+	private static final long serialVersionUID = -7517189697902629185L;
+	
 	private final Date data;
 	private final String descricao;
 	private final double valor;
@@ -12,6 +18,8 @@ public class Despesa {
 	public Despesa(String descricao, double valor) throws DespesaException{
 		this.data = new Date();
 		this.descricao = descricao;
+		if(!DescricaoUtil.validateMotivo(descricao))
+			throw new DespesaException("Motivo da despesa inválido!");
 		if(!ValorUtil.validateValor(valor))
 			throw new DespesaException("Valor da despesa inválido!");
 		this.valor = valor;

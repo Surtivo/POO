@@ -1,44 +1,47 @@
 package valueObjects;
 
-import exceptions.AdvogadoException;
+import java.io.Serializable;
 
-public class Registro {
-    private final String valor;
+import exceptions.RegistroException;
 
-    private Registro (String valor) {
-        this.valor = valor;
-    }
+public class Registro implements Serializable{
 
-    //Método estático de criação — convenção comum para Value Objects;
-    public static Registro valueOf(String valor) throws AdvogadoException {
-    	if (!valor.matches("\\d{6}")) {
-            throw new AdvogadoException("Formato de REGISTRO inválido: " + valor);
-        }
-        return new Registro(valor);
-    }
+	private static final long serialVersionUID = -7402113185709196354L;
+	
+	private final String valor;
 
-    public String getValor() {
-        return valor;
-    }
-    
-    
-    //Métodos que devem ser sobreescritos para value  objects;
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Registro)) return false;
-        Registro reg = (Registro) o;
-        return valor.equals(reg.valor);
-    }
+	private Registro(String valor) {
+		this.valor = valor;
+	}
 
-    @Override
-    public int hashCode() {
-        return valor.hashCode();
-    }
+	public static Registro valueOf(String valor) throws RegistroException {
+		if (!valor.matches("\\d{6}")) {
+			throw new RegistroException("Formato de REGISTRO inválido: " + valor);
+		}
+		return new Registro(valor);
+	}
 
-    @Override
-    public String toString() {
-        return valor;
-    }
+	public String getValor() {
+		return valor;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Registro))
+			return false;
+		Registro reg = (Registro) o;
+		return valor.equals(reg.valor);
+	}
+
+	@Override
+	public int hashCode() {
+		return valor.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return valor;
+	}
 }
-

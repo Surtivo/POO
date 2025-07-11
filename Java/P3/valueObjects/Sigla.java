@@ -1,44 +1,47 @@
 package valueObjects;
 
-import exceptions.TribunalException;
+import java.io.Serializable;
 
-public class Sigla {
-    private final String valor;
+import exceptions.SiglaException;
 
-    private Sigla (String valor) {
-        this.valor = valor;
-    }
+public class Sigla implements Serializable{
 
-    //Método estático de criação — convenção comum para Value Objects;
-    public static Sigla valueOf(String valor) throws TribunalException {
-    	if (!valor.matches("[A-Z0-9]{4}")) {													//Considerando siglas de três letras e um número;
-            throw new TribunalException("Formato de SIGLA inválido: " + valor);
-        }
-        return new Sigla(valor);
-    }
+	private static final long serialVersionUID = -1314423710856511945L;
+	
+	private final String valor;
 
-    public String getValor() {
-        return valor;
-    }
-    
-    
-    //Métodos que devem ser sobreescritos para value  objects;
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Sigla)) return false;
-        Sigla aux = (Sigla) o;
-        return valor.equals(aux.valor);
-    }
+	private Sigla(String valor) {
+		this.valor = valor;
+	}
 
-    @Override
-    public int hashCode() {
-        return valor.hashCode();
-    }
+	public static Sigla valueOf(String valor) throws SiglaException {
+		if (!valor.matches("[A-Z0-9]{4}")) { //Considerando siglas de três letras e um número;
+			throw new SiglaException("Formato de SIGLA inválido: " + valor);
+		}
+		return new Sigla(valor);
+	}
 
-    @Override
-    public String toString() {
-        return valor;
-    }
+	public String getValor() {
+		return valor;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Sigla))
+			return false;
+		Sigla aux = (Sigla) o;
+		return valor.equals(aux.valor);
+	}
+
+	@Override
+	public int hashCode() {
+		return valor.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return valor;
+	}
 }
-

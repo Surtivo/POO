@@ -1,45 +1,54 @@
 package valueObjects;
 
-import exceptions.PessoaException;
+import java.io.Serializable;
 
-public class Email {
-    private final String valor;
+import exceptions.EmailException;
 
-    private Email (String valor) {
-        this.valor = valor;
-    }
+public class Email implements Serializable{
+	
+	private static final long serialVersionUID = -6940272804996753549L;
+	
+	private final String valor;
 
-    //Método estático de criação — convenção comum para Value Objects;
-    public static Email valueOf(String valor) throws PessoaException {
-    	if (!valor.toLowerCase().contains("@")) {
-            throw new PessoaException("Formato de EMAIL inválido: " + valor);
-        }
-        return new Email(valor);
-    }
+	private Email(String valor) {
+		this.valor = valor;
+	}
 
+	public static Email valueOf(String valor) throws EmailException {
+		if (valor == null || valor.isBlank()) {
+			throw new EmailException("E-mail não pode ser nulo ou vazio.");
+		}
 
-    public String getValor() {
-        return valor;
-    }
-    
-    
-    //Métodos que devem ser sobreescritos para value  objects;
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Email)) return false;
-        Email mail = (Email) o;
-        return valor.equals(mail.valor);
-    }
+		String regex = "^[A-Za-z0-9_.]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
 
-    @Override
-    public int hashCode() {
-        return valor.hashCode();
-    }
+		if (!valor.matches(regex)) {
+			throw new EmailException("Formato de e-mail inválido: " + valor);
+		}
 
-    @Override
-    public String toString() {
-        return valor;
-    }
+		return new Email(valor.toLowerCase());
+	}
+
+	public String getValor() {
+		return valor;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Email))
+			return false;
+		Email mail = (Email) o;
+		return valor.equals(mail.valor);
+	}
+
+	@Override
+	public int hashCode() {
+		return valor.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return valor;
+	}
 }
-

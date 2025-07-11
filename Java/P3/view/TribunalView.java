@@ -10,9 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import control.TribunalController;
-import exceptions.TribunalException;
-import valueObjects.Secao;
-import valueObjects.Sigla;
+import dtos.TribunalDto;
+import exceptions.NomeException;
+import exceptions.SecaoException;
+import exceptions.SiglaException;
 
 public class TribunalView extends JFrame {
 	
@@ -28,16 +29,14 @@ public class TribunalView extends JFrame {
         
         this.TribunalControl = TribunalControl;
 
-        // Configuração da janela
         setSize(400, 150);
-        setLocationRelativeTo(null); // centraliza
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // fecha só essa janela
+        setLocationRelativeTo(null); 
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
         
         siglaTxt = new JTextField();
         descricaoTxt = new JTextField();
         secaoTxt = new JTextField();
 
-        // Layout e componentes
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(4, 2));
         
@@ -51,22 +50,26 @@ public class TribunalView extends JFrame {
         panel.add(secaoTxt);
         
         JButton salvar = new JButton("Salvar");
-        salvar.addActionListener(e -> {
-        	String nome = descricaoTxt.getText();
-        	String sigla = siglaTxt.getText();
-        	String secao = secaoTxt.getText();
-        	
-        	try {
-        		this.TribunalControl.addTribunal(Sigla.valueOf(sigla), nome, Secao.valueOf(secao));
-				JOptionPane.showMessageDialog(null, "Feito!");
-			} catch (TribunalException e1) {
-				System.err.println(e1.getMessage());
-		        JOptionPane.showMessageDialog(null, "Erro ao cadastrar tribunal! " + e1.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-			}       	
-        });
+        salvar.addActionListener(e -> actionSalvar());
 
         panel.add(salvar);
 
         add(panel);
     }
+
+	private void actionSalvar() {
+    	String nome = descricaoTxt.getText();
+    	String sigla = siglaTxt.getText();
+    	String secao = secaoTxt.getText();
+    	
+    	TribunalDto t = new TribunalDto (sigla, nome, secao);
+    	
+    	try {
+    		this.TribunalControl.addTribunal(t);
+			JOptionPane.showMessageDialog(null, "Feito!");
+		} catch (NomeException | SiglaException | SecaoException e1) {
+			System.err.println(e1.getMessage());
+	        JOptionPane.showMessageDialog(null, "Erro ao cadastrar tribunal! " + e1.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+		}       	
+    }        	
 }

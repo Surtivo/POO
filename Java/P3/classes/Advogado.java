@@ -1,16 +1,19 @@
 package classes;
+import java.io.Serializable;
+
 import exceptions.AdvogadoException;
 import interfaces.IPessoa;
 import valueObjects.Registro;
 
-public class Advogado implements IPessoa{
+public class Advogado implements IPessoa, Serializable{
+	
+	private static final long serialVersionUID = 8494065544771685558L;
+	
 	private final Registro registro;
 	private final PessoaFisica pessoaFisica;
 
 	public Advogado (PessoaFisica pessoaFisica, Registro registro) throws AdvogadoException {
-		//if(!RegistroUtil.validateRegistro(registro))
-			//throw new AdvogadoException ("Registro inválido ou nulo!");
-		if (pessoaFisica == null)	//Deve criar uma?
+		if (pessoaFisica == null)
 			throw new AdvogadoException("Pessoa não pode ser nula!");
 		this.registro = registro;
 		this.pessoaFisica = pessoaFisica;

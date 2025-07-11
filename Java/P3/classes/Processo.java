@@ -1,5 +1,6 @@
 package classes;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +11,10 @@ import exceptions.DespesaException;
 import exceptions.ProcessoException;
 import valueObjects.NumProc;
 
-public class Processo {
+public class Processo implements Serializable {
+
+	private static final long serialVersionUID = -2940018706540107980L;
+	
 	private Pessoa cliente;
 	private Pessoa parteContraria;
 	private Tribunal tribunal;
@@ -31,8 +35,6 @@ public class Processo {
 		if (tribunal == null)
 			throw new ProcessoException("Tribunal do processo não pode ser nulo!");
 		this.tribunal = tribunal;
-		//if(!NumProcUtil.validateNumero(numero))
-			//throw new ProcessoException("Numero do processo inválido!");
 		this.numero = numero;
 		this.dataAbertura = new Date();
 		this.fase = fase;
@@ -72,19 +74,8 @@ public class Processo {
 		audiencias.add(a);
 		return a;
 	}
-	
-	/*public Audiencia addAudiencia(Advogado advogado, String recomendacao) {
-		Audiencia a = null;
-		try {
-			a = new Audiencia(advogado, recomendacao);
-		} catch (AudienciaException e) {
-			System.err.println(e.getMessage());
-		}
-		audiencias.add(a);
-		return a;
-	}*/
 
-	public String getAudiencias() throws AudienciaException {
+	public String getAudiencias1() throws AudienciaException {
 		String aud = null;
 		StringBuilder st = new StringBuilder();
 		for (Audiencia a : audiencias) {
@@ -96,6 +87,10 @@ public class Processo {
 		return aud;
 	}
 	
+	public ArrayList<Audiencia> getAudiencias() {
+		return audiencias;
+	}
+
 	public Despesa addCusta(String descricao, double valor) throws DespesaException {
 		Despesa c = new Despesa(descricao, valor);
 		custas.add(c);

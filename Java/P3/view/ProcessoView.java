@@ -9,16 +9,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import classes.Pessoa;
-import classes.Tribunal;
 import control.PessoaController;
 import control.ProcessoController;
 import control.TribunalController;
-import enums.EFaseProcesso;
+import dtos.ProcessoDto;
+import exceptions.NumProcException;
 import exceptions.PessoaException;
 import exceptions.ProcessoException;
-import exceptions.TribunalException;
-import valueObjects.NumProc;
+import exceptions.SiglaException;
 
 public class ProcessoView extends JFrame {
 	
@@ -40,10 +38,9 @@ public class ProcessoView extends JFrame {
         this.TribunalControl = TribunalControl;
         this.ProcessoControl = ProcessoControl;
 
-        // Configuração da janela
         setSize(600, 200);
-        setLocationRelativeTo(null); // centraliza
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // fecha só essa janela
+        setLocationRelativeTo(null); 
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
         
         p1Txt = new JTextField();
         p2Txt = new JTextField();
@@ -51,7 +48,6 @@ public class ProcessoView extends JFrame {
         numTxt = new JTextField();
         faseTxt = new JTextField();
 
-        // Layout e componentes
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 2));
 
@@ -71,39 +67,57 @@ public class ProcessoView extends JFrame {
         panel.add(faseTxt);
         
         JButton salvar = new JButton("Salvar");
-        salvar.addActionListener(e -> {
-        	String p1 = p1Txt.getText();
-        	String p2 = p2Txt.getText();
-        	String trib = tribTxt.getText();
-        	String num = numTxt.getText();
-        	String fase = faseTxt.getText();
-        	
-        	try {
-        		Pessoa pessoa1 = this.PersonControl.getPessoa(p1);
-        		Pessoa pessoa2 = this.PersonControl.getPessoa(p2);
-        		Tribunal tribunal = this.TribunalControl.getTribunal(trib);
-        		NumProc numero = NumProc.valueOf(num);
-        		EFaseProcesso fasenum = EFaseProcesso.valueOf(fase.toUpperCase());
-        		
-        		this.ProcessoControl.addProcesso(pessoa1, pessoa2, tribunal, numero, fasenum);
-				JOptionPane.showMessageDialog(null, "Feito!");
-			}catch (PessoaException e1) {
-				System.err.println(e1.getMessage());
-		        JOptionPane.showMessageDialog(null, "Erro ao encontra cliente ou parte contrária! " + e1.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-			}catch (TribunalException e2) {
-				System.err.println(e2.getMessage());
-		        JOptionPane.showMessageDialog(null, "Erro ao  encontrar tribunal! " + e2.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-			}catch (ProcessoException e3) {
-				System.err.println(e3.getMessage());
-		        JOptionPane.showMessageDialog(null, "Erro no número do processo! " + e3.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-		    }catch (IllegalArgumentException e4) {
-			    System.err.println(e4.getMessage());
-			    JOptionPane.showMessageDialog(null, "Erro na fase " + e4.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-			}        	
-        });
+        salvar.addActionListener(e -> actionSalvar());
+        
+        JButton atualizar = new JButton("Atualizar");
+        atualizar.addActionListener(e -> actionAtualizar());
 
         panel.add(salvar);
+        panel.add(atualizar);
 
         add(panel);
+    }
+	
+	private void actionSalvar() {
+    	String p1 = p1Txt.getText();
+    	String p2 = p2Txt.getText();
+    	String trib = tribTxt.getText();
+    	String num = numTxt.getText();
+    	String fase = faseTxt.getText();
+    	
+		ProcessoDto processo = new ProcessoDto(p1, p2, trib, num, fase);
+    	
+    	try {
+    		this.ProcessoControl.addProcesso(processo, PersonControl, TribunalControl); 
+			JOptionPane.showMessageDialog(null, "Feito!");
+		}catch (PessoaException e1) {
+			System.err.println(e1.getMessage());
+	        JOptionPane.showMessageDialog(null, "Erro ao encontrar cliente ou parte contrária! " + e1.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+		}catch (SiglaException e2) {
+			System.err.println(e2.getMessage());
+	        JOptionPane.showMessageDialog(null, "Erro ao  encontrar tribunal! " + e2.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+		}catch (ProcessoException | NumProcException e3) {
+			System.err.println(e3.getMessage());
+	        JOptionPane.showMessageDialog(null, "Erro no número do processo! " + e3.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	    }catch (IllegalArgumentException e4) {
+		    System.err.println(e4.getMessage());
+		    JOptionPane.showMessageDialog(null, "Erro na fase " + e4.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+		}        	
+    }
+	
+	private void actionAtualizar() {
+    	String num = numTxt.getText();
+    	String fase = faseTxt.getText();
+    	
+    	try {
+    		this.ProcessoControl.AtualizarFaseProcesso(num, fase); 
+			JOptionPane.showMessageDialog(null, "Feito!");
+		}catch (NumProcException e3) {
+			System.err.println(e3.getMessage());
+	        JOptionPane.showMessageDialog(null, "Erro no número do processo! " + e3.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	    }catch (IllegalArgumentException e4) {
+		    System.err.println(e4.getMessage());
+		    JOptionPane.showMessageDialog(null, "Erro na fase " + e4.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+		}        	
     }
 }

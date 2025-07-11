@@ -8,28 +8,29 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import classes.Pessoa;
+import dtos.ProcessoDto;
 
-public class ListagemPessoaView extends JFrame {
+public class ListagemProcessosView extends JFrame {
 
-	private static final long serialVersionUID = 3400511787213482944L;
+	private static final long serialVersionUID = 224238595361231789L;
 
-	public ListagemPessoaView(List<Pessoa> pessoas) {
-        super("Listagem de Pessoas");
+	public ListagemProcessosView(List<ProcessoDto> processos) {
+        super("Listagem de Pessoas Fisicas");
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 300);
         setLocationRelativeTo(null);
 
-        String[] colunas = {"Nome", "Registro"};
+        String[] colunas = {"Número", "Fase"};
         DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
 
-        for (Pessoa p : pessoas) {
-            Object[] linha = { p.getNome(), p.getCadastroRF() };
+        for (ProcessoDto p : processos) {
+            Object[] linha = { p.getNumeroProc(), p.getFase() };
             modelo.addRow(linha);
         }
 
         JTable tabela = new JTable(modelo);
+        tabela.setEnabled(false);
         JScrollPane scroll = new JScrollPane(tabela);
         add(scroll, BorderLayout.CENTER);
     }

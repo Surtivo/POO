@@ -1,5 +1,6 @@
 package control;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,45 +8,144 @@ import java.util.List;
 import classes.Pessoa;
 import classes.PessoaFisica;
 import classes.PessoaJuridica;
+import dtos.PessoaFisicaDto;
+import dtos.PessoaJuridicaDto;
+import exceptions.CnpjException;
+import exceptions.CpfException;
+import exceptions.EmailException;
+import exceptions.NomeException;
 import exceptions.PessoaException;
+import exceptions.TelefoneException;
+import util.CnpjUtil;
+import util.CpfUtil;
 import valueObjects.Cnpj;
 import valueObjects.Cpf;
 import valueObjects.Email;
 import valueObjects.Telefone;
 
-public class PessoaController {
+public class PessoaController implements Serializable {
+
+	private static final long serialVersionUID = -844766153504022206L;
 	
 	HashMap<String, Pessoa> pessoas = new HashMap<String, Pessoa>();
 	
-	public void addPessoa(String nome, Email email, Telefone tel, Cpf cpf) throws PessoaException{
-		Pessoa p = new PessoaFisica (nome, email, tel, cpf);
+	public void addPessoaFisica(PessoaFisicaDto pessoa) throws NomeException, EmailException, TelefoneException, CpfException{
+		
+		if(pessoas.containsKey(pessoa.getCadastroRF()))
+			throw new CpfException("Já existe uma pessoa com esse cadastro!");
+		
+		String nome = pessoa.getNome();
+		Email email = Email.valueOf(pessoa.getEmail());
+		Telefone telefone = Telefone.valueOf(pessoa.getTelefone());
+		Cpf cpf = Cpf.valueOf(pessoa.getCadastroRF());
+		
+		Pessoa p = new PessoaFisica (nome, email, telefone, cpf);
 		pessoas.put(p.getCadastroRF(), p);
+		MainController.save();
 	}
 	
-	public void addPessoa(String nome, Email email, Telefone tel, Cnpj cnpj, PessoaFisica preposto) throws PessoaException{
-		Pessoa p = new PessoaJuridica (nome, email, tel, cnpj, preposto);
+	public void addPessoaJuridica(PessoaJuridicaDto pessoa, PessoaFisicaDto preposto) throws NomeException, EmailException, TelefoneException, CnpjException, PessoaException{
+		
+		if(pessoas.containsKey(pessoa.getCadastroRF()))
+			throw new CnpjException("Já existe uma pessoa com esse cadastro!");
+		
+		String nome = pessoa.getNome();
+		Email email = Email.valueOf(pessoa.getEmail());
+		Telefone telefone = Telefone.valueOf(pessoa.getTelefone());
+		Cnpj cnpj = Cnpj.valueOf(pessoa.getCadastroRF());
+		
+		PessoaFisica pessoaPreposto = (PessoaFisica) this.getPessoaController(preposto.getCadastroRF());
+		
+		Pessoa p = new PessoaJuridica (nome, email, telefone, cnpj, pessoaPreposto);
 		pessoas.put(p.getCadastroRF(), p);
+		MainController.save();
 	}
 
-	public String ListarPessoas(){
+	public List<PessoaFisicaDto> listarPessoasFisicas(){
 		
-		StringBuilder sb = new StringBuilder();
+		List<Pessoa> lista_pessoas =  new ArrayList<>(pessoas.values());
+		List<PessoaFisicaDto> lista_pessoas_fisicas_dto =  new ArrayList<>();
 		
-		for(String s : pessoas.keySet()) {
-			sb.append("Cadastro: " + s + " - Nome: " + pessoas.get(s).getNome() + "\n");
+		for(Pessoa p : lista_pessoas) {	//pessoas.keySet()
+			if(CpfUtil.validateCpf(p.getCadastroRF())) {
+				PessoaFisicaDto pDto = new PessoaFisicaDto(p.getNome(), p.getCadastroRF(), p.getEmail(), p.getTel());
+				lista_pessoas_fisicas_dto.add(pDto);
+			}
 		}
 		
-		return ("Listagem das Pessoas:\n" + sb.toString());
+		return lista_pessoas_fisicas_dto;
 	}
 	
-	public List<Pessoa> ListarPessoas2(){
-		 return new ArrayList<>(pessoas.values());
+	public List<PessoaJuridicaDto> listarPessoasJuridicas() {
+		
+		List<Pessoa> lista_pessoas=  new ArrayList<>(pessoas.values());
+		List<PessoaJuridicaDto> lista_pessoas_juridicas_dto =  new ArrayList<>();
+		
+		for(Pessoa p : lista_pessoas) {
+			if(CnpjUtil.validateCnpj(p.getCadastroRF())) {
+				PessoaJuridica pj = (PessoaJuridica) p;
+				PessoaFisica p1 = pj.getPreposto();
+				PessoaFisicaDto PFdto = new PessoaFisicaDto(p1.getNome(), p1.getCadastroRF(), p1.getEmail(), p1.getTel());	
+				PessoaJuridicaDto PJdto = new PessoaJuridicaDto(pj.getNome(), pj.getCadastroRF(), pj.getEmail(), pj.getTel(), PFdto);
+				lista_pessoas_juridicas_dto.add(PJdto);
+			}
+		}
+		
+		return lista_pessoas_juridicas_dto;
 	}
 	
-	public Pessoa getPessoa(String cadastro) throws PessoaException {
+	public PessoaFisicaDto getPessoa(String cadastro) throws PessoaException {
+		Pessoa p = pessoas.get(cadastro);
+		if (p == null)
+			throw new PessoaException("Pessoa informada não está cadastrada!");
+		PessoaFisicaDto pd = new PessoaFisicaDto (p.getNome(), p.getCadastroRF(), p.getEmail(), p.getTel());
+		return pd;
+	}
+	
+	public Pessoa getPessoaController(String cadastro) throws PessoaException {
 		Pessoa p = pessoas.get(cadastro);
 		if (p == null)
 			throw new PessoaException("Pessoa informada não está cadastrada!");
 		return p;
+	}
+	
+	public void AtualizarCadastroFisico(PessoaFisicaDto pessoa) throws PessoaException, EmailException, TelefoneException, NomeException {
+		Pessoa p = pessoas.get(pessoa.getCadastroRF());
+		if (p == null)
+			throw new PessoaException("Pessoa informada não está cadastrada!");
+		
+		String nome = pessoa.getNome();
+		Email email = Email.valueOf(pessoa.getEmail());
+		Telefone telefone = Telefone.valueOf(pessoa.getTelefone());
+		
+		p.setEmail(email);
+		p.setNome(nome);
+		p.setTel(telefone);	
+		MainController.save();		
+	}
+	
+	public void AtualizarCadastroJuridico(PessoaJuridicaDto pessoaJur, PessoaFisicaDto preposto) throws PessoaException, EmailException, TelefoneException, NomeException {
+		Pessoa p = pessoas.get(pessoaJur.getCadastroRF());
+		if (p == null)
+			throw new PessoaException("Pessoa informada não está cadastrada!");
+		
+		PessoaFisica pessoaPreposto = (PessoaFisica) this.getPessoaController(preposto.getCadastroRF());
+		
+		String nome = pessoaJur.getNome();
+		Email email = Email.valueOf(pessoaJur.getEmail());
+		Telefone telefone = Telefone.valueOf(pessoaJur.getTelefone());
+		
+		p.setEmail(email);
+		p.setNome(nome);
+		p.setTel(telefone);	
+		PessoaJuridica pJur = (PessoaJuridica) p;
+		pJur.setPreposto(pessoaPreposto);
+		MainController.save();
+	}
+	
+	//Não sei ainda como fazer;
+	//Tem que verificar se ela não é um advogado!
+	public void DeletePessoa(String cadastro) throws CpfException {
+		
 	}
 }
