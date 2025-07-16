@@ -9,6 +9,7 @@ import javax.swing.JTextArea;
 
 import control.ProcessoController;
 import dtos.AudienciaDto;
+import dtos.DespesaDto;
 import dtos.ProcessoDtoCompleto;
 import exceptions.AudienciaException;
 import exceptions.NumProcException;
@@ -42,7 +43,13 @@ public class ListarProcessoCpfTextView extends JFrame {
                 for(AudienciaDto ad : adtos) {
             		sb.append("\nRecomendação: " + ad.getRecomendacao());
             		sb.append(" - Registro do Advogado: " + ad.getAdvogado());
-                }      
+                } 
+                ArrayList<DespesaDto> ddtos = p.getCustasDto(PC.getNumero());
+                sb.append("\n------------------------------------------------------------------------------------------------------------------------\nDespesas do Processo:  " + PC.getNumero() + ":");
+                for(DespesaDto dd : ddtos) {
+            		sb.append("\nRecomendação: " + dd.getMotivo());
+            		sb.append(" - Registro do Advogado: " + dd.getValor());
+                } 
                 sb.append("\nTotal dos custos R$: " + p.getProcesso(PC.getNumero()).getTotalCustas2() + "\n"); 
                 sb.append("------------------------------------------------------------------------------------------------------------------------\n\n\n");
             }

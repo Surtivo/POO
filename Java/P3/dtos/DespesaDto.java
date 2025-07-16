@@ -1,20 +1,20 @@
 package dtos;
 
-public class CustaDto {
-	private String id;
+public class DespesaDto {
+	private String idProcesso;
 	private String motivo;
 	private String valor;
 	
-	public CustaDto() {}
+	public DespesaDto() {}
 	
-	public CustaDto(String id, String motivo, String valor) {
-		this.id = id;
+	public DespesaDto(String id, String motivo, String valor) {
+		this.idProcesso = id;
 		this.motivo = motivo;
 		this.valor = valor;
 	}
 	
 	public String getId() {
-		return id;
+		return idProcesso;
 	}
 	public String getMotivo() {
 		return motivo;
@@ -23,7 +23,7 @@ public class CustaDto {
 		return valor;
 	}
 	public void setId(String id) {
-		this.id = id;
+		this.idProcesso = id;
 	}
 	public void setMotivo(String motivo) {
 		this.motivo = motivo;

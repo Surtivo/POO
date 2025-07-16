@@ -115,6 +115,10 @@ public class Processo implements Serializable {
 		aud = "\n------------------------------\nCustas do processo " + this.getNumero() + ":" + st;
 		return aud;
 	}
+	
+	public ArrayList<Despesa> getCustos() {
+		return this.custas;
+	}
 
 	public double getTotalCustas() {
 		double total = 0.0;

@@ -37,6 +37,10 @@ public class Despesa implements Serializable{
 		return valor;
 	}
 	
+	public String getValorString() {
+		return Double.toString(valor);
+	}
+	
 	public String ListaDespesa() {
 		String aud = null;
 		StringBuilder st = new StringBuilder();

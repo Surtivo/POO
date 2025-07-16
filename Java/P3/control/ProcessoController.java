@@ -7,11 +7,12 @@ import java.util.List;
 
 import classes.Advogado;
 import classes.Audiencia;
+import classes.Despesa;
 import classes.Pessoa;
 import classes.Processo;
 import classes.Tribunal;
 import dtos.AudienciaDto;
-import dtos.CustaDto;
+import dtos.DespesaDto;
 import dtos.ProcessoDto;
 import dtos.ProcessoDtoCompleto;
 import enums.EFaseProcesso;
@@ -79,7 +80,7 @@ public class ProcessoController implements Serializable {
 		p.addCusta(descricao, valor);
 	}
 
-	public void addCustaDto(CustaDto custa) throws DespesaException, NumberFormatException {
+	public void addCustaDto(DespesaDto custa) throws DespesaException, NumberFormatException {
 		Processo p = processos.get(custa.getId());
 		if (p == null)
 			throw new DespesaException("Processo informado não está cadastrado!");
@@ -114,6 +115,19 @@ public class ProcessoController implements Serializable {
 		}
 
 		return adtos;
+	}
+	
+	public ArrayList<DespesaDto> getCustasDto(String IDprocesso) throws AudienciaException {
+		ArrayList<DespesaDto> custas = new ArrayList<>();
+		Processo p = processos.get(IDprocesso);
+		if (p == null)
+			throw new AudienciaException("Processo informado não está cadastrado!");
+		for (Despesa c : p.getCustos()) {
+			DespesaDto ad = new DespesaDto(p.getNumero(), c.getDescricao(), c.getValorString());
+			custas.add(ad);
+		}
+
+		return custas;
 	}
 
 	public ProcessoDtoCompleto getFullProcesso(String IDprocesso) throws NumProcException {
@@ -209,6 +223,8 @@ public class ProcessoController implements Serializable {
 	}
 
 	public void DeleteProcesso(String numero) throws NumProcException {
+		Processo p = this.getProcesso(numero);
+//		processos.remove(p);
 		processos.remove(numero);
 		MainController.save();
 	}

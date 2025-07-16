@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import control.ProcessoController;
-import dtos.CustaDto;
+import dtos.DespesaDto;
 import exceptions.DespesaException;
 
 public class CustaView extends JFrame {
@@ -60,7 +60,7 @@ public class CustaView extends JFrame {
     	String motivo = motivoTxt.getText();
     	String valor = valorTxt.getText();
     	
-    	CustaDto custa = new CustaDto(id, motivo, valor);
+    	DespesaDto custa = new DespesaDto(id, motivo, valor);
     	
     	try {
     		this.ProcessControl.addCustaDto(custa);
