@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import classes.Advogado;
+import classes.Processo;
 import classes.Tribunal;
 import dtos.TribunalDto;
 import exceptions.NomeException;
@@ -53,11 +55,20 @@ public class TribunalController implements Serializable{
 		return t;
 	}
 	
-	public void DeletarTribunal(String sigla) throws SiglaException {
+	public void DeletarTribunal(String sigla, ProcessoController ProcessoControl) throws SiglaException {
 		//Não faz sentido deletar um tribunal referenciado em um processo, ele nunca será coletado pelo garbage colector. 
 		//E se fosse processo perderia seu histórico.
 		//O processo deveria ter um id do tribunal e não um objeto tribunal.
 		//Deleção para casa de adição errada.
+		Tribunal t = this.getTribunalController(sigla);
+		List<Processo> processos = ProcessoControl.ListagemProcessos();
+		for(Processo p : processos) {
+			if (sigla.equals(p.getTribunal().getSigla())) {
+				p.setTribunal(null);
+			}
+		}	
+		tribunais.remove(sigla);
+		MainController.save();
 	}
 	
 	public void AtualizarTribunal(String sigla) throws SiglaException {

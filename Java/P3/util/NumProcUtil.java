@@ -4,12 +4,12 @@ public class NumProcUtil {
 
 	public static boolean validateNumero(String numero) {
 		
-		if (!numero.matches("\\d{20}")) {
+		if (!numero.matches("\\d{5}")) {
 			return false;
 		}
-		if (!isValidCNJ(numero)) {
-			return false;
-		}
+//		if (!isValidCNJ(numero)) {
+//			return false;
+//		}
 
 		return true;
 	}

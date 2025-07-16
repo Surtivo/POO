@@ -85,17 +85,17 @@ public class DelecaoView {
 	}
 	
 	public static void DeletarPessoa() {
-		DelecaoPessoaView DelecaoPessoaView = new DelecaoPessoaView (MainController.getPessoaController());
+		DelecaoPessoaView DelecaoPessoaView = new DelecaoPessoaView (MainController.getPessoaController(), MainController.getAdvogadoController(), MainController.getProcessoController());
 		DelecaoPessoaView.setVisible(true);
 	}
 	
 	public static void DeletarAdvogado() {
-		DelecaoAdvogadoView DelecaoAdvogadoView = new DelecaoAdvogadoView (MainController.getAdvogadoController());
+		DelecaoAdvogadoView DelecaoAdvogadoView = new DelecaoAdvogadoView (MainController.getAdvogadoController(), MainController.getProcessoController());
 		DelecaoAdvogadoView.setVisible(true);
 	}
 	
 	public static void DeletarTribunal() {
-		DelecaoTribunalView DelecaoTribunalView = new DelecaoTribunalView (MainController.getTribunalController());
+		DelecaoTribunalView DelecaoTribunalView = new DelecaoTribunalView (MainController.getTribunalController(), MainController.getProcessoController());
 		DelecaoTribunalView.setVisible(true);
 	}
 	

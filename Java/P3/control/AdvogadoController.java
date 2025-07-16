@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 
 import classes.Advogado;
+import classes.Audiencia;
 import classes.PessoaFisica;
+import classes.Processo;
 import dtos.AdvogadoDto;
 import exceptions.AdvogadoException;
+import exceptions.AudienciaException;
 import exceptions.PessoaException;
 import exceptions.RegistroException;
 import valueObjects.Registro;
@@ -59,8 +63,29 @@ public class AdvogadoController implements Serializable {
 	}
 	
 	//Não tem pq atualizar advogados, seus registro não muda e seu cpf tbm não. Sua mudança se dá pela pessoa fisica;
-	public void DeleteAdvogado(String Registro) throws RegistroException {
-		
+	public void DeleteAdvogado(String registro, ProcessoController ProcessoControl) throws RegistroException, AdvogadoException, AudienciaException {
+		Advogado a = this.getAdvogadoController(registro);
+		List<Processo> processos = ProcessoControl.ListagemProcessos();
+		for (Processo p : processos) {
+		    ArrayList<Audiencia> aud = p.getAudiencias();
+		    ListIterator<Audiencia> it = aud.listIterator();
+		    while (it.hasNext()) {
+		        Audiencia ad = it.next();
+		        if (registro.equals(ad.getAdvogado().getRegistro())) {
+		            it.remove();
+		            Audiencia nova = new Audiencia(null, ad.getRecomendacao());
+		            it.add(nova);
+		        }
+		    }
+		    p.setAudiencias(aud);
+		}
+		advogados.remove(registro);
+		MainController.save();
+	}
+
+	public ArrayList<Advogado> getAdvogados() {
+		ArrayList<Advogado> advogs = new ArrayList<>(advogados.values());
+		return advogs;
 	}
 	
 }

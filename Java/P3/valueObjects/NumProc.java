@@ -15,12 +15,12 @@ public class NumProc implements Serializable{
 	}
 
 	public static NumProc valueOf(String valor) throws NumProcException {
-		if (!valor.matches("\\d{20}")) {
+		if (!valor.matches("\\d{5}")) {
 			throw new NumProcException("Número do processo deve conter 20 dígitos numéricos.");
 		}
-		if (!isValidCNJ(valor)) {
-			throw new NumProcException("Dígito verificador inválido no número do processo.");
-		}
+//		if (!isValidCNJ(valor)) {
+//			throw new NumProcException("Dígito verificador inválido no número do processo.");
+//		}
 		return new NumProc(valor);
 	}
 

@@ -8,6 +8,7 @@ public class ProcessoDtoCompleto {
 	private String parteContrariaNome;
 	private String tribunalSigla;
 	private String tribunalDescricao;
+	private String tribunalSecao;
 	private String numero;
 	private String dataAbertura;
 	private String fase;
@@ -16,7 +17,7 @@ public class ProcessoDtoCompleto {
 	}
 
 	public ProcessoDtoCompleto(String clienteCadastro, String clienteNome, String parteContrariaCadastro,
-			String parteContrariaNome, String tribunalSigla, String tribunalDescricao, String numero,
+			String parteContrariaNome, String tribunalSigla, String tribunalDescricao, String tribunalSecao, String numero,
 			String dataAbertura, String fase) {
 		this.clienteCadastro = clienteCadastro;
 		this.clienteNome = clienteNome;
@@ -24,6 +25,7 @@ public class ProcessoDtoCompleto {
 		this.parteContrariaNome = parteContrariaNome;
 		this.tribunalSigla = tribunalSigla;
 		this.tribunalDescricao = tribunalDescricao;
+		this.tribunalSecao = tribunalSecao;
 		this.numero = numero;
 		this.dataAbertura = dataAbertura;
 		this.fase = fase;
@@ -51,6 +53,10 @@ public class ProcessoDtoCompleto {
 
 	public String getTribunalDescricao() {
 		return tribunalDescricao;
+	}
+	
+	public String getTribunalSecao() {
+		return tribunalSecao;
 	}
 
 	public String getNumero() {
@@ -99,6 +105,10 @@ public class ProcessoDtoCompleto {
 
 	public void setFase(String fase) {
 		this.fase = fase;
+	}
+
+	public void setTribunalSecao(String tribunalSecao) {
+		this.tribunalSecao = tribunalSecao;
 	}
 
 }

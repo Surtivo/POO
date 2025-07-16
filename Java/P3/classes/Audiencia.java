@@ -26,7 +26,7 @@ public class Audiencia implements Serializable{
 	public Advogado getAdvogado() {
 		return advogado;
 	}
-
+	
 	public Date getData() {
 		return data;
 	}

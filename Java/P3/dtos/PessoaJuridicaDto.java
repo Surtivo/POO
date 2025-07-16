@@ -42,8 +42,16 @@ public class PessoaJuridicaDto {
 		this.telefone = telefone;
 	}
 
-	public PessoaFisicaDto getPreposto() {
-		return preposto;
+	public String getPrepostoCadastro() {
+		if(preposto == null)
+			return null;
+		return preposto.getCadastroRF();
+	}
+	
+	public String getPrepostoNome() {
+		if(preposto == null)
+			return null;
+		return preposto.getNome();
 	}
 
 	public void setPreposto(PessoaFisicaDto preposto) {

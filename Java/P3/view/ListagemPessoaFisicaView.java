@@ -21,11 +21,11 @@ public class ListagemPessoaFisicaView extends JFrame {
         setSize(400, 300);
         setLocationRelativeTo(null);
 
-        String[] colunas = {"Nome", "Registro"};
+        String[] colunas = {"Nome", "Registro", "Telefone", "Email"};
         DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
 
         for (PessoaFisicaDto p : pessoas) {
-            Object[] linha = { p.getNome(), p.getCadastroRF() };
+            Object[] linha = { p.getNome(), p.getCadastroRF(), p.getTelefone(), p.getEmail() };
             modelo.addRow(linha);
         }
 

@@ -18,7 +18,7 @@ public class ListaTribunalView extends JFrame {
         super("Listagem de Tribunais");
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 300);
+        setSize(500, 300);
         setLocationRelativeTo(null);
 
         String[] colunas = {"Nome", "Sigla", "Seção"};

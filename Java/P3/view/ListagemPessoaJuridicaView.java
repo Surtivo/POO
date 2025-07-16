@@ -18,14 +18,14 @@ public class ListagemPessoaJuridicaView extends JFrame {
         super("Listagem de Pessoas Juridicas");
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 300);
+        setSize(850, 250);
         setLocationRelativeTo(null);
 
-        String[] colunas = {"Nome", "Registro"};
+        String[] colunas = {"Nome", "Registro", "Telefone", "Email", "Registro Preposto", "Nome Preposto"};
         DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
 
         for (PessoaJuridicaDto p : pessoas) {
-            Object[] linha = { p.getNome(), p.getCadastroRF() };
+            Object[] linha = { p.getNome(), p.getCadastroRF(), p.getTelefone(), p.getEmail(), p.getPrepostoCadastro(), p.getPrepostoNome()};
             modelo.addRow(linha);
         }
 

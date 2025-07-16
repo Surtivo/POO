@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import control.AdvogadoController;
+import control.ProcessoController;
+import exceptions.AdvogadoException;
+import exceptions.AudienciaException;
 import exceptions.RegistroException;
 
 public class DelecaoAdvogadoView extends JFrame {
@@ -16,12 +19,14 @@ public class DelecaoAdvogadoView extends JFrame {
 	private static final long serialVersionUID = 8465316631206369684L;
 	
 	private AdvogadoController AdvogadoControl;
+	private ProcessoController ProcessoControl;
 	private JTextField registroTxt;
 
-	public DelecaoAdvogadoView(AdvogadoController AdvogadoControl) {
+	public DelecaoAdvogadoView(AdvogadoController AdvogadoControl, ProcessoController ProcessoControl) {
 		super("Deleção de Advogado");
 
 		this.AdvogadoControl = AdvogadoControl;
+		this.ProcessoControl = ProcessoControl;
 
 		setSize(250, 150);
 		setLocationRelativeTo(null);
@@ -47,9 +52,9 @@ public class DelecaoAdvogadoView extends JFrame {
 		String registro = registroTxt.getText();
 
 		try {
-			this.AdvogadoControl.DeleteAdvogado(registro);
+			this.AdvogadoControl.DeleteAdvogado(registro, ProcessoControl);
 			JOptionPane.showMessageDialog(null, "Feito!");
-		} catch (RegistroException e1) {
+		} catch (RegistroException | AdvogadoException | AudienciaException e1) {
 			System.err.println(e1.getMessage());
 			JOptionPane.showMessageDialog(null, "Erro ao deletar advogado! " + e1.getMessage(), "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
 		}

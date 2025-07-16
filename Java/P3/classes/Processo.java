@@ -51,6 +51,10 @@ public class Processo implements Serializable {
 	public Tribunal getTribunal() {
 		return tribunal;
 	}
+	
+	public void setTribunal(Tribunal tribunal) {
+		this.tribunal = tribunal;
+	}
 
 	public String getNumero() {
 		return numero.toString();
@@ -89,6 +93,11 @@ public class Processo implements Serializable {
 	
 	public ArrayList<Audiencia> getAudiencias() {
 		return audiencias;
+	}
+	
+
+	public void setAudiencias(ArrayList<Audiencia> audiencias) {
+		this.audiencias = audiencias;
 	}
 
 	public Despesa addCusta(String descricao, double valor) throws DespesaException {

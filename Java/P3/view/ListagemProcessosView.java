@@ -15,17 +15,17 @@ public class ListagemProcessosView extends JFrame {
 	private static final long serialVersionUID = 224238595361231789L;
 
 	public ListagemProcessosView(List<ProcessoDto> processos) {
-        super("Listagem de Pessoas Fisicas");
+        super("Listagem de Processos");
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 300);
+        setSize(900, 300);
         setLocationRelativeTo(null);
 
-        String[] colunas = {"Número", "Fase"};
+        String[] colunas = {"Número", "Fase", "Tribunal", "Cliente", "Parte Contraria"};
         DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
 
         for (ProcessoDto p : processos) {
-            Object[] linha = { p.getNumeroProc(), p.getFase() };
+            Object[] linha = { p.getNumeroProc(), p.getFase(), p.getTribunal(), p.getRegistroCliente(), p.getRegistroParteContraria()};
             modelo.addRow(linha);
         }
 

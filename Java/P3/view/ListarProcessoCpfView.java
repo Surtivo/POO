@@ -14,14 +14,14 @@ import exceptions.AudienciaException;
 import exceptions.NumProcException;
 import exceptions.ProcessoException;
 
-public class ListarProcessoView extends JFrame {
+public class ListarProcessoCpfView extends JFrame {
 
-	private static final long serialVersionUID = -3184167728998701207L;
+	private static final long serialVersionUID = -7773191865909082789L;
 	
 	private ProcessoController ProcessoControl;
 	private JTextField numeroTxt;
 	
-	public ListarProcessoView(ProcessoController ProcessoControl) {
+	public ListarProcessoCpfView(ProcessoController ProcessoControl) {
         super("Digite o Processo");
         
         this.ProcessoControl = ProcessoControl;
@@ -35,7 +35,7 @@ public class ListarProcessoView extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2));
 
-        panel.add(new JLabel("Número do processo:"));
+        panel.add(new JLabel("Número do CPF/CNPJ:"));
         panel.add(numeroTxt);
         
         JButton buscar = new JButton("Buscar");
@@ -48,9 +48,9 @@ public class ListarProcessoView extends JFrame {
 	
 	private void actionBuscar() {
     	String numero = numeroTxt.getText();
-    	ListarProcessoTextView l = null;
+    	ListarProcessoCpfTextView l = null;
     	try {
-			l = new ListarProcessoTextView(this.ProcessoControl, numero);
+			l = new ListarProcessoCpfTextView(this.ProcessoControl, numero);
 		} catch (ProcessoException | AudienciaException | NumProcException e1) {
 			System.err.println(e1.getMessage());
 	        JOptionPane.showMessageDialog(null, "Erro ao encontrar processo! " + e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);

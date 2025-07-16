@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import control.ProcessoController;
 import control.TribunalController;
 import exceptions.SiglaException;
 
@@ -16,12 +17,14 @@ public class DelecaoTribunalView extends JFrame {
 	private static final long serialVersionUID = -6002852120509459308L;
 	
 	private TribunalController TribunalControl;
+	private ProcessoController ProcessoControl;
 	private JTextField siglaTxt;
 
-	public DelecaoTribunalView(TribunalController TribunalControl) {
+	public DelecaoTribunalView(TribunalController TribunalControl, ProcessoController ProcessoControl) {
 		super("Deleção de Tribunal");
 
 		this.TribunalControl = TribunalControl;
+		this.ProcessoControl = ProcessoControl;
 
 		setSize(250, 150);
 		setLocationRelativeTo(null);
@@ -47,7 +50,7 @@ public class DelecaoTribunalView extends JFrame {
 		String sigla = siglaTxt.getText();
 
 		try {
-			this.TribunalControl.DeletarTribunal(sigla);
+			this.TribunalControl.DeletarTribunal(sigla, ProcessoControl);
 			JOptionPane.showMessageDialog(null, "Feito!");
 		} catch (SiglaException e1) {
 			System.err.println(e1.getMessage());

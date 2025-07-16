@@ -13,11 +13,11 @@ import exceptions.AudienciaException;
 import exceptions.NumProcException;
 import exceptions.ProcessoException;
 
-public class ListarProcessoTextView extends JFrame {
+public class ProcessoCpfView extends JFrame {
 	
-	private static final long serialVersionUID = -2977056161590057795L;
+	private static final long serialVersionUID = 8423902193581131693L;
 
-	public ListarProcessoTextView(ProcessoController p, String numero) throws ProcessoException, AudienciaException, NumProcException {
+	public ProcessoCpfView(ProcessoController p, String numero) throws ProcessoException, AudienciaException, NumProcException {
         super("Listagem do Processo");
 
         setSize(500, 500);
@@ -28,12 +28,12 @@ public class ListarProcessoTextView extends JFrame {
         areaTexto.setEditable(false);
         StringBuilder sb = new StringBuilder();
         
-        ProcessoDtoCompleto PC = p.getFullProcesso(numero);
+        ProcessoDtoCompleto PC = p.getFullProcesso(numero);;
         
         if(PC != null) {
     		String aux = "Numero do Processo: " + PC.getNumero() + "\nData de abertura: " + PC.getDataAbertura() + " - Fase do processo: " + PC.getFase() + 
     				"\nCliente: " + PC.getClienteNome() + " - Registro: " + PC.getClienteCadastro() + "\nParte Contraria: " + PC.getParteContrariaNome() + 
-    				" - Registro: " + PC.getParteContrariaCadastro() + "\nTribunal: " + PC.getTribunalSigla() + " - " + PC.getTribunalDescricao() + " - " + PC.getTribunalSecao();
+    				" - Registro: " + PC.getParteContrariaCadastro() + "\nTribunal: " + PC.getTribunalSigla() + " - " + PC.getTribunalDescricao();
             sb.append(aux);
             
             ArrayList<AudienciaDto> adtos = p.getAudienciasDto(numero);
@@ -46,7 +46,7 @@ public class ListarProcessoTextView extends JFrame {
         }   
         
         areaTexto.setText(sb.toString());
-//        areaTexto.setEnabled(false);
+        areaTexto.setEnabled(false);
 
         JScrollPane scroll = new JScrollPane(areaTexto);
         add(scroll);
